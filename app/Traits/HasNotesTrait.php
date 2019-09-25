@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Note;
+
 trait HasNotesTrait
 {
     public function notes()

@@ -20,7 +20,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix'=> 'goal/'], function () {
     Route::post('create', 'GoalController@create')->name('create');
-    Route::put('update', 'GoalController@update')->name('update');
-    Route::delete('delete/{id}', 'GoalController@update')->name('delete');
-    Route::get('get/{id}', 'GoalController@update')->name('get');
+    Route::put('update/{id}', 'GoalController@update')->name('update');
+    Route::delete('delete/{id}', 'GoalController@Delete')->name('delete');
+    Route::get('{id}', 'GoalController@get')->name('get');
+    Route::get('progress/{id}', 'GoalController@getProgress')->name('getProgress');
+    Route::get('notes/{id}', 'GoalController@getNotes')->name('getNotes');
+});
+
+
+Route::group(['prefix'=> 'progress/'], function () {
+    Route::post('create', 'ProgressController@create')->name('create');
+    Route::put('update/{id}', 'ProgressController@update')->name('update');
+    Route::delete('delete/{id}', 'ProgressController@Delete')->name('delete');
+    Route::get('{id}', 'ProgressController@get')->name('get');
+    Route::get('steps/{id}', 'ProgressController@getSteps')->name('getSteps');
+    Route::get('notes/{id}', 'ProgressController@getNotes')->name('getNotes');
+});
+
+Route::group(['prefix'=> 'step/'], function () {
+    Route::post('create', 'StepController@create')->name('create');
+    Route::put('update/{id}', 'StepController@update')->name('update');
+    Route::delete('delete/{id}', 'StepController@Delete')->name('delete');
+    Route::get('{id}', 'StepController@get')->name('get');
+    Route::get('notes/{id}', 'StepController@getNotes')->name('getNotes');
 });
