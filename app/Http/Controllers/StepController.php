@@ -6,7 +6,7 @@ use App\Step;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class StepsController extends Controller
+class StepController extends Controller
 {
     public function create(Request $request)
     {

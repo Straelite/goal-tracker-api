@@ -44,3 +44,10 @@ Route::group(['prefix'=> 'step/'], function () {
     Route::get('{id}', 'StepController@get')->name('get');
     Route::get('notes/{id}', 'StepController@getNotes')->name('getNotes');
 });
+
+Route::group(['prefix' => 'note/'], function () {
+    Route::post('create', 'NoteController@create')->name('create');
+    Route::put('update/{id}', 'NoteController@update')->name('update');
+    Route::delete('delete/{id}', 'NoteController@Delete')->name('delete');
+    Route::get('{id}', 'NoteController@get')->name('get');
+});

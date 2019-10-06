@@ -18,6 +18,7 @@ class CreateInitialTables extends Migration
             $table->bigInteger('user_id');
             $table->string('title');
             $table->longText('body');
+            $table->boolean('completed')->default(false);
             $table->dateTime('friendly_updated_at');
             $table->timestamps();
             $table->softDeletes();
@@ -28,6 +29,7 @@ class CreateInitialTables extends Migration
             $table->bigInteger('goal_id');
             $table->string('title');
             $table->longText('body');
+            $table->boolean('completed')->default(false);
             $table->dateTime('friendly_updated_at');
             $table->timestamps();
             $table->softDeletes();
@@ -38,6 +40,7 @@ class CreateInitialTables extends Migration
             $table->bigInteger('progress_id');
             $table->string('title');
             $table->longText('body');
+            $table->boolean('completed')->default(false);
             $table->dateTime('friendly_updated_at');
             $table->timestamps();
             $table->softDeletes();
@@ -45,7 +48,6 @@ class CreateInitialTables extends Migration
 
         Schema::create('notes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('progress_id');
             $table->string('title');
             $table->longText('body');
             $table->string('parent_type');
@@ -76,6 +78,6 @@ class CreateInitialTables extends Migration
         Schema::dropIfExists('steps');
         Schema::dropIfExists('progress');
         Schema::dropIfExists('notes');
-        Schema::dropIfExists('relations');
+        Schema::dropIfExists('goal_relations');
     }
 }
