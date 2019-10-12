@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CurateProgressRequest;
 use App\Progress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class ProgressController extends Controller
 {
-    public function create(Request $request)
+    public function create(CurateProgressRequest $request)
     {
         //TODO Custom requests
 
@@ -20,7 +21,7 @@ class ProgressController extends Controller
         return response()->json($goal);
     }
 
-    public function update(Request $request, int $id)
+    public function update(CurateProgressRequest $request, int $id)
     {
         //TODO Custom requests
 

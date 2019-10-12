@@ -4,7 +4,6 @@ namespace App;
 
 class Goal extends ModelAbstract
 {
-
     protected $hidden = [
         'created_at', 'deleted_at', 'updated_at', 'user_id'
     ];
@@ -21,6 +20,11 @@ class Goal extends ModelAbstract
     public function progress()
     {
         return $this->hasMany(Progress::class);
+    }
+
+    public function relatedGoals()
+    {
+        return $this->hasManyThrough(Goal::class, GoalRelations::class, 'source_goal_id', 'id');
     }
 
 }

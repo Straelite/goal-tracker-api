@@ -25,6 +25,9 @@ Route::group(['prefix'=> 'goal/'], function () {
     Route::get('{id}', 'GoalController@get')->name('get');
     Route::get('progress/{id}', 'GoalController@getProgress')->name('getProgress');
     Route::get('notes/{id}', 'GoalController@getNotes')->name('getNotes');
+    Route::post('related/create', 'RelatedGoalController@createGoalRelation')->name('createGoalRelation');
+    Route::get('related/{id}', 'RelatedGoalController@getRelatedGoals')->name('getRelatedGoals');
+    Route::delete('related/delete/{id}', 'RelatedGoalController@deleteGoalRelation')->name('deleteGoalRelation');
 });
 
 
