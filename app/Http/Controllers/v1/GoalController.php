@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Goal;
 use App\GoalRelations;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CurateGoalRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -12,14 +13,10 @@ class GoalController extends Controller
 {
     public function create(CurateGoalRequest $request)
     {
-        //TODO Custom requests
-
         $data = $request->all();
         $data['friendly_updated_at'] = Carbon::parse($data['friendly_updated_at']);
         $model = Goal::create($data);
-
-
-        return response()->json($model);
+        return response()->json($model, 201)->withHeaders(['Location' => route('v1.goal.get', ['id' => (int) $model->id])]);
     }
 
     public function update(CurateGoalRequest $request, int $id)
@@ -73,8 +70,8 @@ class GoalController extends Controller
     public function createGoalRelation(Request $request)
     {
         $data = [
-          'source_goal_id' => $request->input('source'),
-          'related_goal_id' => $request->input('related')
+            'source_goal_id' => $request->input('source'),
+            'related_goal_id' => $request->input('related')
         ];
         $existingModel = GoalRelations::where($data)->first();
         if ($existingModel) {

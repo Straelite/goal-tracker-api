@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Step;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 class StepController extends Controller
 {
@@ -16,8 +17,7 @@ class StepController extends Controller
         $data['friendly_updated_at'] = Carbon::parse($data['friendly_updated_at']);
         $model = Step::create($data);
 
-
-        return response()->json($model);
+        return response()->json($model, 201)->withHeaders(['Location' => route('v1.step.get', ['id' => (int) $model->id])]);
     }
 
     public function update(Request $request, int $id)

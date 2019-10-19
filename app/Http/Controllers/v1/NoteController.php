@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 class NoteController extends Controller
 {
@@ -22,7 +23,7 @@ class NoteController extends Controller
 
         $model->parent()->save($parent);
 
-        return response()->json($model);
+        return response()->json($model, 201)->withHeaders(['Location' => route('v1.note.get', ['id' => (int) $model->id])]);
     }
 
     public function update(Request $request, int $id)

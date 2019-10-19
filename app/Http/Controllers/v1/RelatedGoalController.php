@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 use App\Goal;
 use App\GoalRelations;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RelatedGoalController extends Controller
 {
