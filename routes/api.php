@@ -24,6 +24,7 @@ Route::group(['prefix' => 'v1/', 'namespace' => 'v1', 'as' => 'v1.'], function (
         Route::put('update/{id}', 'GoalController@update')->name('update');
         Route::delete('delete/{id}', 'GoalController@Delete')->name('delete');
         Route::get('{id}', 'GoalController@get')->name('get');
+        Route::get('/getlist', 'GoalController@getPaginated')->name('getGoalsPaginated');
         Route::get('progress/{id}', 'GoalController@getProgress')->name('getProgress');
         Route::get('notes/{id}', 'GoalController@getNotes')->name('getNotes');
         Route::post('related/create', 'RelatedGoalController@createGoalRelation')->name('createGoalRelation');
@@ -32,7 +33,7 @@ Route::group(['prefix' => 'v1/', 'namespace' => 'v1', 'as' => 'v1.'], function (
     });
 
 
-    Route::group(['prefix' => 'progress/'], function () {
+    Route::group(['prefix' => 'progress/', 'as' => 'progress.'], function () {
         Route::post('create', 'ProgressController@create')->name('create');
         Route::put('update/{id}', 'ProgressController@update')->name('update');
         Route::delete('delete/{id}', 'ProgressController@Delete')->name('delete');
@@ -41,7 +42,7 @@ Route::group(['prefix' => 'v1/', 'namespace' => 'v1', 'as' => 'v1.'], function (
         Route::get('notes/{id}', 'ProgressController@getNotes')->name('getNotes');
     });
 
-    Route::group(['prefix' => 'step/'], function () {
+    Route::group(['prefix' => 'step/', 'as' => 'step.'], function () {
         Route::post('create', 'StepController@create')->name('create');
         Route::put('update/{id}', 'StepController@update')->name('update');
         Route::delete('delete/{id}', 'StepController@Delete')->name('delete');
@@ -49,7 +50,7 @@ Route::group(['prefix' => 'v1/', 'namespace' => 'v1', 'as' => 'v1.'], function (
         Route::get('notes/{id}', 'StepController@getNotes')->name('getNotes');
     });
 
-    Route::group(['prefix' => 'note/'], function () {
+    Route::group(['prefix' => 'note/', 'as' => 'note.'], function () {
         Route::post('create', 'NoteController@create')->name('create');
         Route::put('update/{id}', 'NoteController@update')->name('update');
         Route::delete('delete/{id}', 'NoteController@Delete')->name('delete');

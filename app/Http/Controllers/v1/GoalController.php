@@ -4,13 +4,21 @@ namespace App\Http\Controllers\V1;
 
 use App\Goal;
 use App\GoalRelations;
+use App\Helpers\PaginationHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CurateGoalRequest;
+use App\Http\Requests\v1\CurateGoalRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class GoalController extends Controller
 {
+    protected $paginationHelper;
+
+    public function __construct()
+    {
+        $this->paginationHelper = new PaginationHelper();
+    }
+
     public function create(CurateGoalRequest $request)
     {
         $data = $request->all();
@@ -46,24 +54,40 @@ class GoalController extends Controller
         return response()->json($model);
     }
 
+    public function getPaginated(Request $request)
+    {
+
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
+        $models = Goal::query()->offset($paginationData['offset'])->take($paginationData['take'])->get();
+        return response()->json($models);
+    }
+
     public function getProgress(Request $request, int $id)
     {
+
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
         $model = Goal::findOrFail($id);
-        $progress = $model->progress()->get();
+        $progress = $model->progress()->offset($paginationData['offset'])->take($paginationData['take'])->get();
         return response()->json($progress);
     }
 
     public function getNotes(Request $request, int $id)
     {
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
         $model = Goal::findOrFail($id);
-        $progress = $model->notes()->get();
+        $progress = $model->notes()->offset($paginationData['offset'])->take($paginationData['take'])->get();
         return response()->json($progress);
     }
 
     public function getRelatedGoals(Request $request, int $id)
     {
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
         $model = Goal::findOrFail($id);
-        $relatedGoals = $model->relatedGoals()->get();
+        $relatedGoals = $model->relatedGoals()->offset($paginationData['offset'])->take($paginationData['take'])->get();
         return response()->json($relatedGoals);
     }
 
@@ -88,4 +112,6 @@ class GoalController extends Controller
         $response = $model->delete();
         return response()->json($response);
     }
+
+
 }

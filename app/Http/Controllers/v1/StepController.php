@@ -9,6 +9,13 @@ use App\Http\Controllers\Controller;
 
 class StepController extends Controller
 {
+    protected $paginationHelper;
+
+    public function __construct()
+    {
+        $this->paginationHelper = new PaginationHelper();
+    }
+
     public function create(Request $request)
     {
         //TODO Custom requests
@@ -49,8 +56,10 @@ class StepController extends Controller
 
     public function getNotes(Request $request, int $id)
     {
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
         $model = Step::findOrFail($id);
-        $progress = $model->notes()->get();
+        $progress = $model->notes()->offset($paginationData['offset'])->take($paginationData['take'])->get();
         return response()->json($progress);
     }
 }

@@ -9,6 +9,13 @@ use App\Http\Controllers\Controller;
 
 class NoteController extends Controller
 {
+    protected $paginationHelper;
+
+    public function __construct()
+    {
+        $this->paginationHelper = new PaginationHelper();
+    }
+
     public function create(Request $request)
     {
         //TODO Custom requests

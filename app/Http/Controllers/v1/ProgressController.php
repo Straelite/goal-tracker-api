@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\V1;
 
-use App\Http\Requests\CurateProgressRequest;
+use App\Http\Requests\v1\CurateProgressRequest;
 use App\Progress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,9 +10,15 @@ use Illuminate\Support\Carbon;
 
 class ProgressController extends Controller
 {
+    protected $paginationHelper;
+
+    public function __construct()
+    {
+        $this->paginationHelper = new PaginationHelper();
+    }
+
     public function create(CurateProgressRequest $request)
     {
-        //TODO Custom requests
 
         $data = $request->all();
         $data['friendly_updated_at'] = Carbon::parse($data['friendly_updated_at']);
@@ -51,15 +57,19 @@ class ProgressController extends Controller
 
     public function getSteps(Request $request, int $id)
     {
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
         $model = Progress::findOrFail($id);
-        $progress = $model->steps()->get();
+        $progress = $model->steps()->offset($paginationData['offset'])->take($paginationData['take'])->get();
         return response()->json($progress);
     }
 
     public function getNotes(Request $request, int $id)
     {
+        $paginationData = $this->paginationHelper->getPaginationData($request);
+
         $model = Progress::findOrFail($id);
-        $progress = $model->notes()->get();
+        $progress = $model->notes()->offset($paginationData['offset'])->take($paginationData['take'])->get();
         return response()->json($progress);
     }
 }
