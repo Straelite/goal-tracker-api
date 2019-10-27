@@ -32,7 +32,7 @@ class StepController extends Controller
         //TODO Custom requests
 
         $data = $request->all();
-        $data['friendly_updated_at'] = empty($data['friendly_updated_at']) ? Carbon::parse($data['friendly_updated_at']) : Carbon::parse($data['friendly_updated_at']);
+        $data['friendly_updated_at'] = empty($data['friendly_updated_at']) ? Carbon::now() : Carbon::parse($data['friendly_updated_at']);
         $model = Step::findOrFail($id);
         $model->update($data);
 

@@ -22,7 +22,8 @@ class GoalController extends Controller
     public function create(CurateGoalRequest $request)
     {
         $data = $request->all();
-        $data['friendly_updated_at'] = Carbon::parse($data['friendly_updated_at']);
+        $data['friendly_updated_at'] = Carbon::now();
+        $data['user_id'] = 1;
         $model = Goal::create($data);
         return response()->json($model, 201)->withHeaders(['Location' => route('v1.goal.get', ['id' => (int) $model->id])]);
     }
@@ -32,7 +33,7 @@ class GoalController extends Controller
         //TODO Custom requests
 
         $data = $request->all();
-        $data['friendly_updated_at'] = empty($data['friendly_updated_at']) ? Carbon::parse($data['friendly_updated_at']) : Carbon::parse($data['friendly_updated_at']);
+        $data['friendly_updated_at'] = empty($data['friendly_updated_at']) ? Carbon::now() : Carbon::parse($data['friendly_updated_at']);
         $model = Goal::findOrFail($id);
         $model->update($data);
 
@@ -43,7 +44,7 @@ class GoalController extends Controller
     {
         $model = Goal::findOrFail($id);
         $delete = $model->delete();
-        return response()->json($delete);
+        return response()->json(['deleted' => $delete]);
     }
 
     public function get(Request $request, int $id)
